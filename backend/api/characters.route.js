@@ -1,7 +1,8 @@
 import express from "express";
+import CharactersCtrl from "./characters.controller.js"
 
 const router = express.Router();
 
-router.route("/").get((req, res) => res.send("Movie Characters Review API"));
+router.route("/").get(CharactersCtrl.apiGetCharacters);
 
 export default router;

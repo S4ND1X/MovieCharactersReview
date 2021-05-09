@@ -1,6 +1,7 @@
 import app from "./server.js";
 import mongodb from "mongodb";
 import dotenv from "dotenv";
+import CharactersDAO from "./dao/characters.DAO"
 
 //Load env vars
 dotenv.config();
@@ -22,6 +23,7 @@ MongoClient.connect(process.env.RESTREVIEWS_DB_URI, {
     process.exit(1);
   })
   .then(async (client) => {
+    await CharactersDAO.injectDB(client);
     app.listen(port, () => {
       console.log(`Listening on port ${port}`);
     });
