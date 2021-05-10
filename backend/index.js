@@ -6,12 +6,14 @@ import CharactersDAO from "./dao/characters.DAO"
 //Load env vars
 dotenv.config();
 
+//Instantiate MongoDB Client (mongoose is an alternative)
 const MongoClient = mongodb.MongoClient;
 
+//Defining in wich port to run
 const port = process.env.PORT || 8000;
 
-console.log(process.env.PORT);
 
+//Connect our MongoClient with our express app
 MongoClient.connect(process.env.RESTREVIEWS_DB_URI, {
   poolSize: 50,
   writeConcern: { wtimeout: 2500 },
@@ -23,6 +25,7 @@ MongoClient.connect(process.env.RESTREVIEWS_DB_URI, {
     process.exit(1);
   })
   .then(async (client) => {
+    //Inject our CharacterDAO into the api
     await CharactersDAO.injectDB(client);
     app.listen(port, () => {
       console.log(`Listening on port ${port}`);

@@ -1,8 +1,10 @@
 import CharactersDAO from "../dao/characters.DAO";
 
 export default class CharactersController {
+
   static async apiGetCharacters(req, res, next) {
-    //If passed characterPerPage or page in url if not then set default
+
+    //If passed characterPerPage or page in request url if not then set default
     const charactersPerPage = req.query.charactersPerPage
       ? parseInt(req.query.charactersPerPage, 10)
       : 20;
@@ -10,7 +12,7 @@ export default class CharactersController {
 
     let filters = {};
 
-    //If filters are present on url
+    //If filters are present on request url
     if (req.query.name) {
       filters.name = req.query.name;
     } else if (req.query.gender) {
@@ -19,7 +21,7 @@ export default class CharactersController {
       filters.house = req.query.house;
     }
 
-    //Get response
+    //Get documents based on filters, page and charactersPerPage trough DAO
     const {
       charactersList,
       totalNumCharacters,
@@ -30,7 +32,7 @@ export default class CharactersController {
     });
 
 
-    //Define api response
+    //Build request response based of DAO response
     let response = {
       characters: charactersList,
       page: page,
