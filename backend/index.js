@@ -25,8 +25,10 @@ MongoClient.connect(process.env.RESTREVIEWS_DB_URI, {
     process.exit(1);
   })
   .then(async (client) => {
-    //Inject our CharacterDAO into the api
+
+    //Inject MongoDB client to initialize characters collection in DAO
     await CharactersDAO.injectDB(client);
+
     app.listen(port, () => {
       console.log(`Listening on port ${port}`);
     });
